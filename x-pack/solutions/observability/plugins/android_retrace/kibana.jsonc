@@ -1,0 +1,15 @@
+{
+  "type": "plugin",
+  "id": "@kbn/android-retrace-plugin",
+  "owner": ["@elastic/observability-android"],
+  "group": "observability",
+  "visibility": "private",
+  "plugin": {
+    "id": "androidRetrace",
+    "browser": true,
+    "server": true,
+    "configPath": ["xpack", "androidRetrace"],
+    "requiredPlugins": [],
+    "optionalPlugins": []
+  }
+}
