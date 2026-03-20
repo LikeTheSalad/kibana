@@ -24,8 +24,6 @@ export function registerRetraceRoute({ router, logger }: RouteRegisterParameters
         },
       },
       options: {
-        access: 'public',
-        summary: 'Deobfuscate an Android R8 stack trace',
         tags: ['Android', 'R8', 'Retrace'],
       },
       validate: {

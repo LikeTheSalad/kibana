@@ -8,4 +8,4 @@
 export const PLUGIN_ID = 'androidRetrace';
 export const MAPPING_INDEX = 'android-r8-mappings';
 export const CRASH_INDEX_PATTERN = 'logs-generic.otel*';
-export const RETRACE_API_PATH = '/api/android/retrace';
+export const RETRACE_API_PATH = '/internal/android/retrace';

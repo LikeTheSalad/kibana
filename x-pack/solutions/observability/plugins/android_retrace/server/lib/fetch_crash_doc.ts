@@ -21,7 +21,7 @@ export async function fetchCrashDocument(
     query: {
       ids: { values: [docId] },
     },
-    _source: ['exception.stacktrace'],
+    _source: ['exception.stacktrace', 'attributes.exception.stacktrace'],
     size: 1,
   });
 
@@ -32,9 +32,19 @@ export async function fetchCrashDocument(
   const source = result.hits.hits[0]._source as Record<string, unknown> | undefined;
   if (!source) return null;
 
-  const exception = source.exception as Record<string, unknown> | undefined;
-  if (!exception) return null;
+  // OTel data stores fields under "attributes.*"
+  const attrs = source.attributes as Record<string, unknown> | undefined;
+  if (attrs) {
+    const attrException = attrs['exception.stacktrace'];
+    if (typeof attrException === 'string') return attrException;
+  }
 
-  const stacktrace = exception.stacktrace;
-  return typeof stacktrace === 'string' ? stacktrace : null;
+  // Fallback: top-level exception.stacktrace (ECS-style)
+  const exception = source.exception as Record<string, unknown> | undefined;
+  if (exception) {
+    const stacktrace = exception.stacktrace;
+    if (typeof stacktrace === 'string') return stacktrace;
+  }
+
+  return null;
 }
